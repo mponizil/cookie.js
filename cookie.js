@@ -8,6 +8,7 @@
 
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) define('cookie', factory);
+  else if (typeof exports === 'object') module.exports = factory();
   else root.Cookie = factory();
 }(this, function() {
 
