@@ -1,0 +1,19 @@
+{
+  "name": "cookie.js",
+  "version": "1.0.0",
+  "description": "jQuery Cookie did all the heavy lifting",
+  "main": "cookie.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mponizil/cookie.js.git"
+  },
+  "author": "Misha Ponizil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mponizil/cookie.js/issues"
+  },
+  "homepage": "https://github.com/mponizil/cookie.js"
+}
