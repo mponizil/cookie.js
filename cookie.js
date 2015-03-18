@@ -60,6 +60,8 @@
     };
 
     Cookie.get = function(key, options) {
+        options = options || {};
+
         // read
         var decode = options.raw ? raw : decoded;
         var cookies = document.cookie.split('; ');
