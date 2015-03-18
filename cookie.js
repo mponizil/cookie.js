@@ -33,7 +33,11 @@
             s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
         }
 
-        return JSON.parse(s);
+        try {
+            return JSON.parse(s);
+        } catch (e) {
+            return s;
+        }
     }
 
     Cookie.set = function (key, value, options) {
@@ -45,7 +49,7 @@
             t.setDate(t.getDate() + days);
         }
 
-        value = JSON.stringify(value);
+        value = (typeof value === 'object') ? JSON.stringify(value) : value;
 
         return (document.cookie = [
             options.raw ? key : encodeURIComponent(key),
