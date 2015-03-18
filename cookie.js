@@ -7,14 +7,12 @@
  */
 
 (function (root, factory) {
-  if (typeof define === 'function' && define.amd) define('cookie', factory);
-  else if (typeof exports === 'object') module.exports = factory();
-  else root.Cookie = factory();
-}(this, function() {
+  if (typeof define === 'function' && define.amd) define(['exports'], factory);
+  else if (typeof exports === 'object') module.exports = factory(exports);
+  else root.Cookie = factory({});
+}(this, function(Cookie) {
 
-    var Cookie = {},
-        config = {},
-        pluses = /\+/g;
+    var pluses = /\+/g;
 
     function raw(s) {
         return s;
@@ -34,9 +32,8 @@
             // This is a quoted cookie as according to RFC2068, unescape
             s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
         }
-        try {
-            return config.json ? JSON.parse(s) : s;
-        } catch(er) {}
+
+        return JSON.parse(s);
     }
 
     Cookie.set = function (key, value, options) {
@@ -48,12 +45,12 @@
             t.setDate(t.getDate() + days);
         }
 
-        value = config.json ? JSON.stringify(value) : String(value);
+        value = JSON.stringify(value);
 
         return (document.cookie = [
-            config.raw ? key : encodeURIComponent(key),
+            options.raw ? key : encodeURIComponent(key),
             '=',
-            config.raw ? value : encodeURIComponent(value),
+            options.raw ? value : encodeURIComponent(value),
             options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
             options.path    ? '; path=' + options.path : '',
             options.domain  ? '; domain=' + options.domain : '',
@@ -64,7 +61,7 @@
 
     Cookie.get = function(key, options) {
         // read
-        var decode = config.raw ? raw : decoded;
+        var decode = options.raw ? raw : decoded;
         var cookies = document.cookie.split('; ');
         var result = key ? undefined : {};
         for (var i = 0, l = cookies.length; i < l; i++) {
